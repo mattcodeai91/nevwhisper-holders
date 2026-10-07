@@ -3,6 +3,7 @@ const U="https://raw.githubusercontent.com/mattcodeai91/nevwhisper/holder-scan-d
 const P="https://nevwhisper-proxy.mattcodeai91.workers.dev";
 const E="https://q-lock-ecosystem.com/explorer/";
 const INTERVAL=15000;
+const CACHE_BUSTER="v3";
 const SATOSHIS_PER_NEV=100000000n;
 
 let balances=new Map();
@@ -93,7 +94,8 @@ function render(){
   document.getElementById("list").innerHTML=rows.length?rows.map(([address,balance],i)=>'<div class="row"><div class="rank">#'+(i+1)+'</div><div><div class="address" title="'+esc(address)+'">'+esc(sh(address))+'</div><a class="explorer" target="_blank" rel="noopener" href="'+E+'#/address/'+encodeURIComponent(address)+'">VIEW ADDRESS ↗</a></div><div class="balance">'+esc(compactNev(balance))+' NEV</div><div class="share">'+esc(holderPercentage(balance))+' of supply</div></div>').join(""):"<div style='padding:22px;color:var(--muted)'>No positive holders in the snapshot.</div>";
 }
 async function getJson(url){
-  const r=await fetch(url,{cache:"no-store"});
+  const joiner=url.includes("?")?"&":"?";
+  const r=await fetch(url+joiner+"v="+CACHE_BUSTER,{cache:"no-store"});
   if(!r.ok)throw Error("HTTP "+r.status+" for "+url);
   return r.json();
 }
