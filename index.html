@@ -1,1 +1,124 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NEV369 Top Holders</title><style>:root{--bg:#0b0d12;--card:#151820;--line:#252a36;--text:#f3f4f6;--muted:#9298a8;--accent:#7c6cff;--green:#34d399}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}main{max-width:900px;margin:auto;padding:42px 20px 70px}.eyebrow{color:var(--accent);font-size:12px;font-weight:800;letter-spacing:.14em}h1{margin:8px 0 4px;font-size:36px}.sub{color:var(--muted);margin-bottom:28px}.status{display:flex;gap:9px;color:var(--green);font-size:13px;font-weight:700;margin-bottom:18px}.dot{width:8px;height:8px;border-radius:50%;background:var(--green)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px}.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:14px}.card{padding:17px}.label{font-size:12px;color:var(--muted);margin-bottom:7px}.value{font-size:21px;font-weight:800}.panel{overflow:hidden}.panelhead{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}.panelhead h2{margin:0;font-size:18px}.updated{color:var(--muted);font-size:12px}.row{display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line)}.row:last-child{border:0}.rank{font-size:24px;font-weight:900;color:var(--muted)}.address{font-family:monospace;font-size:13px;word-break:break-all}.explorer{color:var(--accent);text-decoration:none;font-size:11px;margin-top:6px;display:inline-block}.balance{text-align:right;font-size:17px;font-weight:800;white-space:nowrap}.note{color:var(--muted);font-size:12px;line-height:1.6;margin-top:16px}.error{color:#fb7185;background:#24151a;border:1px solid #4b252e;border-radius:12px;padding:14px}@media(max-width:650px){main{padding:28px 14px}.grid{grid-template-columns:1fr}.row{grid-template-columns:42px 1fr}.balance{grid-column:2;text-align:left}h1{font-size:30px}}</style></head><body><main><div class="eyebrow">NEV369</div><h1>Top Holders</h1><div class="sub">Chain-derived balance ranking · Genesis → live tip</div><div class="status"><span class="dot"></span><span id="status">Loading live snapshot…</span></div><div class="grid"><div class="card"><div class="label">Chain scanned</div><div class="value" id="height">—</div></div><div class="card"><div class="label">Circulating Supply</div><div class="value" id="supply">—</div></div><div class="card"><div class="label">Positive holders</div><div class="value" id="holders">—</div></div></div><section class="panel"><div class="panelhead"><h2>Top 10 holders</h2><div class="updated" id="updated">—</div></div><div id="list"><div style="padding:22px;color:var(--muted)">Loading holder balances…</div></div></section><div class="note">Balances are calculated from persisted raw NEV369 transaction data. This is a chain-derived ranking, not a third-party rich-list feed. Snapshot refreshes automatically every 30 seconds.</div></main><script>const U="https://raw.githubusercontent.com/mattcodeai91/nevwhisper/holder-scan-data/top-holders.json";const E="https://q-lock-ecosystem.com/explorer/?";function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}function sh(a){return a.length>22?a.slice(0,12)+"…"+a.slice(-10):a}async function load(){try{let r=await fetch(U+"?t="+Date.now(),{cache:"no-store"});if(!r.ok)throw Error("HTTP "+r.status);let d=await r.json(),x=d.diagnostics||{};document.getElementById("height").textContent=Number(d.chainHeight).toLocaleString();document.getElementById("supply").textContent=(x.totalPositiveBalanceNEV||"—")+" NEV";document.getElementById("holders").textContent=Number(x.positiveAddresses||0).toLocaleString();document.getElementById("updated").textContent=d.generatedAt?new Date(d.generatedAt).toLocaleString():"—";let rows=Array.isArray(d.top10)?d.top10:[];document.getElementById("list").innerHTML=rows.length?rows.map(v=>'<div class="row"><div class="rank">#'+esc(v.rank)+'</div><div><div class="address" title="'+esc(v.address)+'">'+esc(sh(v.address))+'</div><a class="explorer" target="_blank" rel="noopener" href="'+E+'#/address/'+encodeURIComponent(v.address)+'">VIEW ADDRESS ↗</a></div><div class="balance">'+esc(v.balanceNEV)+' NEV</div></div>').join(""):"<div style='padding:22px;color:var(--muted)'>No positive holders in the snapshot.</div>";document.getElementById("status").textContent="Live snapshot connected"}catch(e){document.getElementById("status").textContent="Snapshot unavailable";document.getElementById("list").innerHTML='<div class="error">Could not load the holder snapshot. Retrying automatically.</div>';console.error(e)}}load();setInterval(load,30000);</script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NEV369 Top Holders</title><style>:root{--bg:#0b0d12;--card:#151820;--line:#252a36;--text:#f3f4f6;--muted:#9298a8;--accent:#7c6cff;--green:#34d399}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}main{max-width:900px;margin:auto;padding:42px 20px 70px}.eyebrow{color:var(--accent);font-size:12px;font-weight:800;letter-spacing:.14em}h1{margin:8px 0 4px;font-size:36px}.sub{color:var(--muted);margin-bottom:28px}.status{display:flex;gap:9px;color:var(--green);font-size:13px;font-weight:700;margin-bottom:18px}.dot{width:8px;height:8px;border-radius:50%;background:var(--green)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px}.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:14px}.card{padding:17px}.label{font-size:12px;color:var(--muted);margin-bottom:7px}.value{font-size:21px;font-weight:800}.panel{overflow:hidden}.panelhead{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}.panelhead h2{margin:0;font-size:18px}.updated{color:var(--muted);font-size:12px}.row{display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line)}.row:last-child{border:0}.rank{font-size:24px;font-weight:900;color:var(--muted)}.address{font-family:monospace;font-size:13px;word-break:break-all}.explorer{color:var(--accent);text-decoration:none;font-size:11px;margin-top:6px;display:inline-block}.balance{text-align:right;font-size:17px;font-weight:800;white-space:nowrap}.note{color:var(--muted);font-size:12px;line-height:1.6;margin-top:16px}.error{color:#fb7185;background:#24151a;border:1px solid #4b252e;border-radius:12px;padding:14px}@media(max-width:650px){main{padding:28px 14px}.grid{grid-template-columns:1fr}.row{grid-template-columns:42px 1fr}.balance{grid-column:2;text-align:left}h1{font-size:30px}}</style></head><body><main><div class="eyebrow">NEV369</div><h1>Top Holders</h1><div class="sub">Chain-derived balance ranking · Genesis → live tip</div><div class="status"><span class="dot"></span><span id="status">Loading live snapshot…</span></div><div class="grid"><div class="card"><div class="label">Chain scanned</div><div class="value" id="height">—</div></div><div class="card"><div class="label">Circulating Supply</div><div class="value" id="supply">—</div></div><div class="card"><div class="label">Positive holders</div><div class="value" id="holders">—</div></div></div><section class="panel"><div class="panelhead"><h2>Top 10 holders</h2><div class="updated" id="updated">—</div></div><div id="list"><div style="padding:22px;color:var(--muted)">Loading holder balances…</div></div></section><div class="note">Balances are calculated from persisted raw NEV369 transaction data. This is a chain-derived ranking, not a third-party rich-list feed. The page starts from the latest complete chain snapshot, then applies every newly verified block live so mining rewards and transfers appear without waiting for a full Genesis rescan.</div></main><script>
+const U="https://raw.githubusercontent.com/mattcodeai91/nevwhisper/holder-scan-data/top-holders.json";
+const P="https://nevwhisper-proxy.mattcodeai91.workers.dev";
+const E="https://q-lock-ecosystem.com/explorer/";
+const INTERVAL=15000;
+const SATOSHIS_PER_NEV=100000000n;
+
+let balances=new Map();
+let chainHeight=-1;
+let snapshotHeight=-1;
+let initialized=false;
+let busy=false;
+
+function esc(s){
+  return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+}
+function sh(a){return a.length>22?a.slice(0,12)+"…"+a.slice(-10):a}
+function asBigInt(v){
+  if(v===null||v===undefined||v==="") return 0n;
+  if(typeof v==="bigint") return v;
+  if(typeof v==="string") return BigInt(v);
+  if(typeof v==="number" && Number.isFinite(v) && Number.isInteger(v)) return BigInt(v);
+  return 0n;
+}
+function nev(v){
+  const negative=v<0n;
+  const n=negative?-v:v;
+  const whole=n/SATOSHIS_PER_NEV;
+  const frac=(n%SATOSHIS_PER_NEV).toString().padStart(8,"0").replace(/0+$/,"");
+  return (negative?"-":"")+whole.toString()+(frac?"."+frac:"");
+}
+function setBalance(address,delta){
+  if(!address)return;
+  balances.set(address,(balances.get(address)||0n)+delta);
+}
+function render(){
+  const positive=Array.from(balances.entries()).filter(([,v])=>v>0n).sort((a,b)=>b[1]>a[1]?-1:b[1]<a[1]?1:0);
+  const total=positive.reduce((s,[,v])=>s+v,0n);
+  document.getElementById("height").textContent=chainHeight>=0?chainHeight.toLocaleString():"—";
+  document.getElementById("supply").textContent=nev(total)+" NEV";
+  document.getElementById("holders").textContent=positive.length.toLocaleString();
+  const rows=positive.slice(0,10);
+  document.getElementById("list").innerHTML=rows.length?rows.map(([address,balance],i)=>'<div class="row"><div class="rank">#'+(i+1)+'</div><div><div class="address" title="'+esc(address)+'">'+esc(sh(address))+'</div><a class="explorer" target="_blank" rel="noopener" href="'+E+'#/address/'+encodeURIComponent(address)+'">VIEW ADDRESS ↗</a></div><div class="balance">'+esc(nev(balance))+' NEV</div></div>').join(""):"<div style='padding:22px;color:var(--muted)'>No positive holders in the snapshot.</div>";
+}
+async function getJson(url){
+  const r=await fetch(url,{cache:"no-store"});
+  if(!r.ok)throw Error("HTTP "+r.status+" for "+url);
+  return r.json();
+}
+function applyTransaction(t){
+  const sender=t.sender?String(t.sender):"";
+  const recipient=t.recipient?String(t.recipient):"";
+  const amount=asBigInt(t.amount??t.value??0);
+  const fee=asBigInt(t.fee??0);
+  const crownTax=asBigInt(t.crown_tax??t.crownTax??0);
+  if(recipient)setBalance(recipient,amount);
+  if(sender && sender.toUpperCase()==="NETWORK_REWARD") return;
+  if(sender)setBalance(sender,-(amount+fee+crownTax));
+}
+async function applyBlock(height){
+  const payload=await getJson(P+"/block/"+height+"?_="+Date.now());
+  const txs=Array.isArray(payload.transactions)?payload.transactions:[];
+  for(const tx of txs)applyTransaction(tx);
+  chainHeight=height;
+  render();
+  document.getElementById("status").textContent="Live · verified block #"+height.toLocaleString();
+  document.getElementById("updated").textContent=new Date().toLocaleString();
+}
+async function loadSnapshot(){
+  const d=await getJson(U+"?t="+Date.now());
+  const h=Number(d.chainHeight);
+  if(!Number.isFinite(h))throw Error("Invalid snapshot height");
+  if(initialized && h<=snapshotHeight)return false;
+  const source=d.balances||{};
+  if(!Object.keys(source).length)throw Error("Snapshot has no full balance state yet");
+  balances=new Map(Object.entries(source).map(([a,v])=>[a,BigInt(v)]));
+  snapshotHeight=h;
+  chainHeight=h;
+  initialized=true;
+  render();
+  document.getElementById("updated").textContent=d.generatedAt?new Date(d.generatedAt).toLocaleString():"—";
+  return true;
+}
+async function syncLive(){
+  if(busy||!initialized)return;
+  busy=true;
+  try{
+    const info=await getJson(P+"/info?_="+Date.now());
+    const tip=Number(info.height??info.chain_height);
+    if(!Number.isFinite(tip)){busy=false;return}
+    if(tip<chainHeight){
+      await loadSnapshot();
+    }else{
+      for(let h=chainHeight+1;h<=tip;h++)await applyBlock(h);
+      if(tip===chainHeight)document.getElementById("status").textContent="Live · verified block #"+chainHeight.toLocaleString();
+    }
+  }catch(e){
+    document.getElementById("status").textContent="Live sync waiting · retrying";
+    console.error(e);
+  }finally{busy=false}
+}
+async function load(){
+  try{
+    await loadSnapshot();
+    document.getElementById("status").textContent="Live · verified block #"+chainHeight.toLocaleString();
+    await syncLive();
+  }catch(e){
+    document.getElementById("status").textContent="Snapshot unavailable";
+    document.getElementById("list").innerHTML='<div class="error">The complete holder snapshot is not available yet. Retrying automatically.</div>';
+    console.error(e);
+  }
+}
+load();
+setInterval(async()=>{
+  try{
+    const d=await getJson(U+"?t="+Date.now());
+    const h=Number(d.chainHeight);
+    if(Number.isFinite(h)&&h>snapshotHeight){
+      await loadSnapshot();
+    }
+  }catch(e){console.error(e)}
+  await syncLive();
+},INTERVAL);
+</script></body></html>
