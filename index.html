@@ -159,9 +159,19 @@ async function load(){
     document.getElementById("status").textContent="Live · verified block #"+chainHeight.toLocaleString();
     await syncLive();
   }catch(e){
-    document.getElementById("status").textContent="Snapshot unavailable";
-    document.getElementById("list").innerHTML='<div class="error">The complete holder snapshot is not available yet. Retrying automatically.</div>';
-    console.error(e);
+    console.warn("Holder snapshot unavailable; starting chain scan from Genesis.",e);
+
+    balances=new Map();
+    chainHeight=-1;
+    snapshotHeight=-1;
+    circulatingSupply=0n;
+    initialized=true;
+
+    document.getElementById("status").textContent="Scanning chain from Genesis…";
+    document.getElementById("updated").textContent="Building live holder state";
+
+    render();
+    await syncLive();
   }
 }
 load();
@@ -172,7 +182,9 @@ setInterval(async()=>{
     if(Number.isFinite(h)&&h>snapshotHeight){
       await loadSnapshot();
     }
-  }catch(e){console.error(e)}
+  }catch(e){
+    /* Snapshot is optional once the live Genesis scan is running. */
+  }
   await syncLive();
 },INTERVAL);
 </script></body></html>
